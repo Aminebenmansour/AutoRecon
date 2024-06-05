@@ -1,12 +1,12 @@
 [tool.poetry]
-name = "autorecon"
+name = "defansy"
 version = "2.0.35"
 description = "A multi-threaded network reconnaissance tool which performs automated enumeration of services."
 authors = ["Tib3rius"]
 license = "GNU GPL v3"
-exclude = ["autorecon.py"]
+exclude = ["defansy.py"]
 packages = [
-	{ include = "autorecon" },
+	{ include = "defansy" },
 ]
 
 [tool.poetry.dependencies]
@@ -22,7 +22,7 @@ Unidecode = "^1.3.1"
 [tool.poetry.dev-dependencies]
 
 [tool.poetry.scripts]
-autorecon = "autorecon.main:main"
+defansy = "defansy.main:main"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
