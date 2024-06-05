@@ -1572,7 +1572,150 @@ async def run():
 				i+=1
 				if i >= num_new_targets:
 					break
+	from flask import Flask, send_file, jsonify
+	from flask_cors import CORS
+	app = Flask(__name__)
+	CORS(app)  # Active CORS pour toutes les routes de l'application
+	def parse_nmap_file(file_path):
+		results = {}
+		current_service = None
+		with open(file_path, 'r') as file:
+			for line in file:
+				# Chercher la ligne qui commence par un numéro de port
+				port_match = re.match(r'^(\d+)/tcp\s+(open|closed)\s+(\w+)\s+(.*)$', line)
+				if port_match:
+					port, state, service, version = port_match.groups()
+					current_service = service
+					results[current_service] = {'state': state, 'version': version, 'details': ''}
+				elif current_service:
+					# Ajouter les détails de chaque service
+					results[current_service]['details'] += line.rstrip() + '\n'
+		return results
 
+	@app.route('/get_nmap', methods=['GET'])
+	def get_nmap():
+		directory_path = os.path.abspath(f'./results/{ip}/scans/')
+		file_path = os.path.join(directory_path, '_quick_tcp_nmap.txt')
+		if not os.path.exists(file_path):
+			return jsonify([])
+
+		with open(file_path, 'r') as file:
+			content = file.read()
+			nmap_results = parse_nmap_file(file_path)
+		print(nmap_results)
+
+		return jsonify(nmap_results)
+	RESULTS_DIR = '/home/amine/amine/stage1/ss/SemiAutoRecon/results'
+	def find_txt_files(directory):
+		txt_files = []
+		for root, dirs, files in os.walk(directory):
+			for file in files:
+				if file.endswith('.txt'):
+					txt_files.append(os.path.join(root, file))
+		return txt_files
+
+	@app.route('/scan', methods=['GET'])
+	def get_scannmap():
+		ip_directories = os.listdir(RESULTS_DIR)
+		nmap_results = {}
+
+		for ip_dir in ip_directories:
+			directory_path = os.path.join(RESULTS_DIR, ip_dir, 'scans')
+			file_path = os.path.join(directory_path, '_quick_tcp_nmap.txt')
+			
+			if os.path.exists(file_path):
+				with open(file_path, 'r') as file:
+					for line in file:
+						port_match = re.match(r'^(\d+)/tcp\s+(open|closed)\s+(\w+)\s+(.*)$', line)
+						if port_match:
+							port, state, protocol, version = port_match.groups()
+							if protocol in nmap_results:
+								nmap_results[protocol] += 1
+							else:
+								nmap_results[protocol] = 1
+		print(nmap_results)
+		return jsonify(nmap_results)
+	@app.route('/compteur')
+	def count_ports():
+		open_ports = 0
+		closed_ports = 0
+		filtered_ports = 0
+		txt_files = find_txt_files(RESULTS_DIR)
+		for txt_file in txt_files:
+			parsed_results = parse_nmap_file(txt_file)
+			for service, info in parsed_results.items():
+				state = info['state']
+				if state == 'open':
+					open_ports += 1
+				elif state == 'closed':
+					closed_ports += 1
+				elif state == 'filtered':
+					filtered_ports += 1
+		print({'open_ports': open_ports, 'closed_ports': closed_ports, 'filtered_ports': filtered_ports})
+		return jsonify({'open_ports': open_ports, 'closed_ports': closed_ports, 'filtered_ports': filtered_ports})
+
+	@app.route('/api/scans')
+	def get_scans():
+		ip_directories = os.listdir(RESULTS_DIR)
+		print(ip_directories)
+		scans_data = []
+		for ip_dir in ip_directories:
+			ip_dir_path = os.path.join(RESULTS_DIR, ip_dir)
+			txt_files = find_txt_files(ip_dir_path)
+			for file_path in txt_files:
+				with open(file_path, 'r') as file:
+					file_data = file.read()
+				scans_data.append({
+					'ip': ip_dir,
+					'fileName': os.path.relpath(file_path, ip_dir_path),  # Adjusting to show path relative to IP folder
+					'content': file_data
+				})
+		return jsonify(scans_data)
+	@app.route('/get_data', methods=['GET'])
+	def get_data():
+		try:
+			# Chemin absolu du répertoire scans/tcp/
+			directory_path = os.path.abspath(f'./results/{ip}/scans/')
+
+			# Afficher les dossiers dans le répertoire scans/tcp/
+			folders = [f for f in os.listdir(directory_path) if os.path.isdir(os.path.join(directory_path, f)) and f.startswith('tcp')]
+			print('Dossiers dans', directory_path, ':', folders)
+
+			protocol_data = []
+
+			# Parcourir les dossiers
+			for folder in folders:
+				folder_path = os.path.join(directory_path, folder)
+				# Chemin vers le fichier exploit_results.txt dans chaque dossier
+				file_path = os.path.join(folder_path, 'exploit_results.txt')
+
+				vulnerabilities = []
+
+				# Vérifier si le fichier existe
+				if os.path.exists(file_path):
+					with open(file_path, 'r') as file:
+						data = file.readlines()
+						for line in data:
+							parts = line.strip().split(':')
+							if len(parts) == 3:
+								vulnerabilities.append({
+									'exploitLine': parts[0].strip(),
+									'description': parts[1].strip(),
+									'path': parts[2].strip()
+								})
+
+				protocol_data.append({
+					'protocol': folder,
+					'vulnerabilities': vulnerabilities
+				})
+			return jsonify(protocol_data)
+
+		except Exception as e:
+			print(f"Erreur lors de la récupération des données : {e}")
+			return str(e), 500
+
+	# Appel de la fonction run() directement
+	app.run(debug=True)
 	if not config['disable_keyboard_control']:
 		keyboard_monitor.cancel()
 
