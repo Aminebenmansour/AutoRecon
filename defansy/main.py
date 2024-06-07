@@ -1535,7 +1535,7 @@ async def run():
 		done, pending = await asyncio.wait(pending, return_when=asyncio.FIRST_COMPLETED, timeout=1)
 		elapsed_seconds = round(time.time() - start_time)
 		m, s = divmod(elapsed_seconds, 60)
-		if m >= 1:
+		if m >= 5:
 				break
 		# If something failed in scan_target, defansy.errors will be true.
 		if defansy.errors:
