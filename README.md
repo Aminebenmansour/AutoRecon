@@ -1,18 +1,18 @@
 > It's like bowling with bumpers. - [@ippsec](https://twitter.com/ippsec)
 
-# defansy
+# defensy
 
-defansy is a multi-threaded network reconnaissance tool which performs automated enumeration of services. It is intended as a time-saving tool for use in CTFs and other penetration testing environments (e.g. OSCP). It may also be useful in real-world engagements.
+defensy is a multi-threaded network reconnaissance tool which performs automated enumeration of services. It is intended as a time-saving tool for use in CTFs and other penetration testing environments (e.g. OSCP). It may also be useful in real-world engagements.
 
 The tool works by firstly performing port scans / service detection scans. From those initial results, the tool will launch further enumeration scans of those services using a number of different tools. For example, if HTTP is found, feroxbuster will be launched (as well as many others).
 
 Everything in the tool is highly configurable. The default configuration performs **no automated exploitation** to keep the tool in line with OSCP exam rules. If you wish to add automatic exploit tools to the configuration, you do so at your own risk. The author will not be held responsible for negative actions that result from the mis-use of this tool.
 
-**Disclaimer: While defansy endeavors to perform as much identification and enumeration of services as possible, there is no guarantee that every service will be identified, or that every service will be fully enumerated. Users of defansy (especially students) should perform their own manual enumeration alongside defansy. Do not rely on this tool alone for exams, CTFs, or other engagements.**
+**Disclaimer: While defensy endeavors to perform as much identification and enumeration of services as possible, there is no guarantee that every service will be identified, or that every service will be fully enumerated. Users of defensy (especially students) should perform their own manual enumeration alongside defensy. Do not rely on this tool alone for exams, CTFs, or other engagements.**
 
 ## Origin
 
-defansy was inspired by three tools which the author used during the OSCP labs: [Reconnoitre](https://github.com/codingo/Reconnoitre), [ReconScan](https://github.com/RoliSoft/ReconScan), and [bscan](https://github.com/welchbj/bscan). While all three tools were useful, none of the three alone had the functionality desired. defansy combines the best features of the aforementioned tools while also implementing many new features to help testers with enumeration of multiple targets.
+defensy was inspired by three tools which the author used during the OSCP labs: [Reconnoitre](https://github.com/codingo/Reconnoitre), [ReconScan](https://github.com/RoliSoft/ReconScan), and [bscan](https://github.com/welchbj/bscan). While all three tools were useful, none of the three alone had the functionality desired. defensy combines the best features of the aforementioned tools while also implementing many new features to help testers with enumeration of multiple targets.
 
 ## Features
 
@@ -35,7 +35,7 @@ defansy was inspired by three tools which the author used during the OSCP labs: 
 
 ## Installation
 
-There are three ways to install defansy: pipx, pip, and manually. Before installation using any of these methods, certain requirements need to be fulfilled. If you have not refreshed your apt cache recently, run the following command so you are installing the latest available packages:
+There are three ways to install defensy: pipx, pip, and manually. Before installation using any of these methods, certain requirements need to be fulfilled. If you have not refreshed your apt cache recently, run the following command so you are installing the latest available packages:
 
 ```bash
 sudo apt update
@@ -43,7 +43,7 @@ sudo apt update
 
 ### Python 3
 
-defansy requires the usage of Python 3.8+ and pip, which can be installed on Kali Linux using the following commands:
+defensy requires the usage of Python 3.8+ and pip, which can be installed on Kali Linux using the following commands:
 
 ```bash
 sudo apt install python3
@@ -52,13 +52,13 @@ sudo apt install python3-pip
 
 ### Supporting Packages
 
-Several commands used in defansy reference the SecLists project, in the directory /usr/share/seclists/. You can either manually download the SecLists project to this directory (https://github.com/danielmiessler/SecLists), or if you are using Kali Linux (**highly recommended**) you can run the following commands:
+Several commands used in defensy reference the SecLists project, in the directory /usr/share/seclists/. You can either manually download the SecLists project to this directory (https://github.com/danielmiessler/SecLists), or if you are using Kali Linux (**highly recommended**) you can run the following commands:
 
 ```bash
 sudo apt install seclists
 ```
 
-defansy will still run if you do not install SecLists, though several commands may fail, and some manual commands may not run either.
+defensy will still run if you do not install SecLists, though several commands may fail, and some manual commands may not run either.
 
 Additionally the following commands may need to be installed, depending on your OS:
 
@@ -93,7 +93,7 @@ sudo apt install seclists curl dnsrecon enum4linux feroxbuster gobuster impacket
 
 ### Installation Method #1: pipx (Recommended)
 
-It is recommended you use `pipx` to install defansy. pipx will install defansy in it's own virtual environment, and make it available in the global context, avoiding conflicting package dependencies and the resulting instability. First, install pipx using the following commands:
+It is recommended you use `pipx` to install defensy. pipx will install defensy in it's own virtual environment, and make it available in the global context, avoiding conflicting package dependencies and the resulting instability. First, install pipx using the following commands:
 
 
 ```bash
@@ -104,84 +104,84 @@ python3 -m pipx ensurepath
 
 You will have to re-source your ~/.bashrc or ~/.zshrc file (or open a new tab) after running these commands in order to use pipx.
 
-Install defansy using the following command:
+Install defensy using the following command:
 
 ```bash
-pipx install git+https://github.com/Tib3rius/defansy.git
+pipx install git+https://github.com/Tib3rius/defensy.git
 ```
 
-Note that if you want to run defansy using sudo (required for faster SYN scanning and UDP scanning), you have to use _one_ of the following examples:
+Note that if you want to run defensy using sudo (required for faster SYN scanning and UDP scanning), you have to use _one_ of the following examples:
 
 ```bash
-sudo env "PATH=$PATH" defansy [OPTIONS]
-sudo $(which defansy) [OPTIONS]
+sudo env "PATH=$PATH" defensy [OPTIONS]
+sudo $(which defensy) [OPTIONS]
 ```
 
 ### Installation Method #2: pip
 
-Alternatively you can use `pip` to install defansy using the following command:
+Alternatively you can use `pip` to install defensy using the following command:
 
 ```bash
-python3 -m pip install git+https://github.com/Tib3rius/defansy.git
+python3 -m pip install git+https://github.com/Tib3rius/defensy.git
 ```
 
-Note that if you want to run defansy using sudo (required for faster SYN scanning and UDP scanning), you will have to run the above command as the root user (or using sudo).
+Note that if you want to run defensy using sudo (required for faster SYN scanning and UDP scanning), you will have to run the above command as the root user (or using sudo).
 
-Similarly to `pipx`, if installed using `pip` you can run defansy by simply executing `defansy`.
+Similarly to `pipx`, if installed using `pip` you can run defensy by simply executing `defensy`.
 
 ### Installation Method #3: Manually
 
-If you'd prefer not to use `pip` or `pipx`, you can always still install and execute `defansy.py` manually as a script. From within the defansy directory, install the dependencies:
+If you'd prefer not to use `pip` or `pipx`, you can always still install and execute `defensy.py` manually as a script. From within the defensy directory, install the dependencies:
 
 ```bash
 python3 -m pip install -r requirements.txt
 ```
 
-You will then be able to run the `defansy.py` script:
+You will then be able to run the `defensy.py` script:
 
 ```bash
-python3 defansy.py [OPTIONS] 127.0.0.1
+python3 defensy.py [OPTIONS] 127.0.0.1
 ```
 
 ## Upgrading
 
 ### pipx
 
-Upgrading defansy when it has been installed with pipx is the easiest, and is why the method is recommended. Simply run the following command:
+Upgrading defensy when it has been installed with pipx is the easiest, and is why the method is recommended. Simply run the following command:
 
 ```bash
-pipx upgrade defansy
+pipx upgrade defensy
 ```
 
 ### pip
 
-If you've installed defansy using pip, you will first have to uninstall defansy and then re-install using the same install command:
+If you've installed defensy using pip, you will first have to uninstall defensy and then re-install using the same install command:
 
 ```bash
-python3 -m pip uninstall defansy
-python3 -m pip install git+https://github.com/Tib3rius/defansy.git
+python3 -m pip uninstall defensy
+python3 -m pip install git+https://github.com/Tib3rius/defensy.git
 ```
 
 ### Manually
 
-If you've installed defansy manually, simply change to the defansy directory and run the following command:
+If you've installed defensy manually, simply change to the defensy directory and run the following command:
 
 ```bash
 git pull
 ```
 
-Assuming you did not modify any of the content in the defansy directory, this should pull the latest code from this GitHub repo, after which you can run defansy using the defansy.py script as per usual.
+Assuming you did not modify any of the content in the defensy directory, this should pull the latest code from this GitHub repo, after which you can run defensy using the defensy.py script as per usual.
 
 ### Plugins
 
-A plugin update process is in the works. Until then, after upgrading, remove the ~/.local/share/defansy directory and run defansy with any argument to repopulate with the latest files.
+A plugin update process is in the works. Until then, after upgrading, remove the ~/.local/share/defensy directory and run defensy with any argument to repopulate with the latest files.
 
 ## Usage
 
-defansy uses Python 3 specific functionality and does not support Python 2.
+defensy uses Python 3 specific functionality and does not support Python 2.
 
 ```
-usage: defansy [-t TARGET_FILE] [-p PORTS] [-m MAX_SCANS] [-mp MAX_PORT_SCANS] [-c CONFIG_FILE] [-g GLOBAL_FILE] [--tags TAGS]
+usage: defensy [-t TARGET_FILE] [-p PORTS] [-m MAX_SCANS] [-mp MAX_PORT_SCANS] [-c CONFIG_FILE] [-g GLOBAL_FILE] [--tags TAGS]
                  [--exclude-tags TAGS] [--port-scans PLUGINS] [--service-scans PLUGINS] [--reports PLUGINS] [--plugins-dir PLUGINS_DIR]
                  [--add-plugins-dir PLUGINS_DIR] [-l [TYPE]] [-o OUTPUT] [--single-target] [--only-scans-dir] [--no-port-dirs]
                  [--heartbeat HEARTBEAT] [--timeout TIMEOUT] [--target-timeout TARGET_TIMEOUT] [--nmap NMAP | --nmap-append NMAP_APPEND]
@@ -208,9 +208,9 @@ optional arguments:
   -mp MAX_PORT_SCANS, --max-port-scans MAX_PORT_SCANS
                         The maximum number of concurrent port scans to run. Default: 10 (approx 20% of max-scans unless specified)
   -c CONFIG_FILE, --config CONFIG_FILE
-                        Location of defansy's config file. Default: ~/.config/defansy/config.toml
+                        Location of defensy's config file. Default: ~/.config/defensy/config.toml
   -g GLOBAL_FILE, --global-file GLOBAL_FILE
-                        Location of defansy's global file. Default: ~/.config/defansy/global.toml
+                        Location of defensy's global file. Default: ~/.config/defensy/global.toml
   --tags TAGS           Tags to determine which plugins should be included. Separate tags by a plus symbol (+) to group tags together. Separate
                         groups with a comma (,) to create multiple groups. For a plugin to be included, it must have all the tags specified in
                         at least one group. Default: default
@@ -222,7 +222,7 @@ optional arguments:
                         Override --tags / --exclude-tags for the listed ServiceScan plugins (comma separated). Default: None
   --reports PLUGINS     Override --tags / --exclude-tags for the listed Report plugins (comma separated). Default: None
   --plugins-dir PLUGINS_DIR
-                        The location of the plugins directory. Default: ~/.local/share/defansy/plugins
+                        The location of the plugins directory. Default: ~/.local/share/defensy/plugins
   --add-plugins-dir PLUGINS_DIR
                         The location of an additional plugins directory to add to the main one. Default: None
   -l [TYPE], --list [TYPE]
@@ -237,23 +237,23 @@ optional arguments:
                         itself. Default: False
   --heartbeat HEARTBEAT
                         Specifies the heartbeat interval (in seconds) for scan status messages. Default: 60
-  --timeout TIMEOUT     Specifies the maximum amount of time in minutes that defansy should run for. Default: None
+  --timeout TIMEOUT     Specifies the maximum amount of time in minutes that defensy should run for. Default: None
   --target-timeout TARGET_TIMEOUT
                         Specifies the maximum amount of time in minutes that a target should be scanned for before abandoning it and moving on.
                         Default: None
   --nmap NMAP           Override the {nmap_extra} variable in scans. Default: -vv --reason -Pn -T4
   --nmap-append NMAP_APPEND
                         Append to the default {nmap_extra} variable in scans. Default:
-  --proxychains         Use if you are running defansy via proxychains. Default: False
+  --proxychains         Use if you are running defensy via proxychains. Default: False
   --disable-sanity-checks
                         Disable sanity checks that would otherwise prevent the scans from running. Default: False
   --disable-keyboard-control
                         Disables keyboard control ([s]tatus, Up, Down) if you are in SSH or Docker.
   --force-services SERVICE [SERVICE ...]
                         A space separated list of services in the following style: tcp/80/http tcp/443/https/secure
-  --accessible          Attempts to make defansy output more accessible to screenreaders. Default: False
+  --accessible          Attempts to make defensy output more accessible to screenreaders. Default: False
   -v, --verbose         Enable verbose output. Repeat for more verbosity.
-  --version             Prints the defansy version and exits.
+  --version             Prints the defensy version and exits.
   -h, --help            Show this help message and exit.
 
 plugin arguments:
@@ -264,7 +264,7 @@ plugin arguments:
                         The tool to use for directory busting. Default: feroxbuster
   --dirbuster.wordlist VALUE [VALUE ...]
                         The wordlist(s) to use when directory busting. Separate multiple wordlists with spaces. Default:
-                        ['~/.local/share/defansy/wordlists/dirbuster.txt']
+                        ['~/.local/share/defensy/wordlists/dirbuster.txt']
   --dirbuster.threads VALUE
                         The number of threads to use when directory busting. Default: 10
   --dirbuster.ext VALUE
@@ -286,14 +286,14 @@ global plugin arguments:
 
 ### Verbosity
 
-defansy supports four levels of verbosity:
+defensy supports four levels of verbosity:
 
-* (none) Minimal output. defansy will announce when scanning targets starts / ends.
-* (-v) Verbose output. defansy will additionally announce when plugins start running, and report open ports and identified services.
-* (-vv) Very verbose output. defansy will additionally specify the exact commands which are being run by plugins, highlight any patterns which are matched in command output, and announce when plugins end.
-* (-vvv) Very, very verbose output. defansy will output everything. Literally every line from all commands which are currently running. When scanning multiple targets concurrently, this can lead to a ridiculous amount of output. It is not advised to use -vvv unless you absolutely need to see live output from commands.
+* (none) Minimal output. defensy will announce when scanning targets starts / ends.
+* (-v) Verbose output. defensy will additionally announce when plugins start running, and report open ports and identified services.
+* (-vv) Very verbose output. defensy will additionally specify the exact commands which are being run by plugins, highlight any patterns which are matched in command output, and announce when plugins end.
+* (-vvv) Very, very verbose output. defensy will output everything. Literally every line from all commands which are currently running. When scanning multiple targets concurrently, this can lead to a ridiculous amount of output. It is not advised to use -vvv unless you absolutely need to see live output from commands.
 
-Note: You can change the verbosity of defansy mid-scan by pressing the up and down arrow keys.
+Note: You can change the verbosity of defensy mid-scan by pressing the up and down arrow keys.
 
 ### Results
 
@@ -326,8 +326,8 @@ The report directory contains some auto-generated files and directories that are
 * proof.txt can be used to store the proof.txt flag found on targets.
 * The screenshots directory is intended to contain the screenshots you use to document the exploitation of the target.
 
-The scans directory is where all results from scans performed by defansy will go. This includes port scans / service detection scans, as well as any service enumeration scans. It also contains two other files:
-* \_commands.log contains a list of every command defansy ran against the target. This is useful if one of the commands fails and you want to run it again with modifications.
+The scans directory is where all results from scans performed by defensy will go. This includes port scans / service detection scans, as well as any service enumeration scans. It also contains two other files:
+* \_commands.log contains a list of every command defensy ran against the target. This is useful if one of the commands fails and you want to run it again with modifications.
 * \_manual_commands.txt contains any commands that are deemed "too dangerous" to run automatically, either because they are too intrusive, require modification based on human analysis, or just work better when there is a human monitoring them.
 
 By default, directories are created for each open port (e.g. tcp80, udp53) and scan results for the services found on those ports are stored in their respective directories. You can disable this behavior using the --no-port-dirs command line option, and scan results will instead be stored in the scans directory itself.
@@ -340,27 +340,27 @@ The scans/xml directory stores any XML output (e.g. from Nmap scans) separately 
 
 ## Testimonials
 
-> defansy was invaluable during my OSCP exam, in that it saved me from the tedium of executing my active information gathering commands myself.  I was able to start on a target with all of the information I needed clearly laid in front of me.  I would strongly recommend this utility for anyone in the PWK labs, the OSCP exam, or other environments such as VulnHub or HTB.  It is a great tool for both people just starting down their journey into OffSec and seasoned veterans alike.  Just make sure that somewhere between those two points you take the time to learn what's going on "under the hood" and how / why it scans what it does.
+> defensy was invaluable during my OSCP exam, in that it saved me from the tedium of executing my active information gathering commands myself.  I was able to start on a target with all of the information I needed clearly laid in front of me.  I would strongly recommend this utility for anyone in the PWK labs, the OSCP exam, or other environments such as VulnHub or HTB.  It is a great tool for both people just starting down their journey into OffSec and seasoned veterans alike.  Just make sure that somewhere between those two points you take the time to learn what's going on "under the hood" and how / why it scans what it does.
 >
 >\- b0ats (rooted 5/5 exam hosts)
 
-> Wow, what a great find! Before using defansy, ReconScan was my goto enumeration script for targets because it automatically ran the enumeration commands after it finds open ports. The only thing missing was the automatic creation of key directories a pentester might need during an engagement (exploit, loot, report, scans). Reconnoitre did this but didn't automatically run those commands for you. I thought ReconScan that was the bee's knees until I gave defansy a try. It's awesome! It combines the best features of Reconnoitre (auto directory creation) and ReconScan (automatically executing the enumeration commands). All I have to do is run it on a target or a set of targets and start going over the information it has already collected while it continues the rest of scan. The proof is in the pudding :) Passed the OSCP exam! Kudos to Tib3rius!
+> Wow, what a great find! Before using defensy, ReconScan was my goto enumeration script for targets because it automatically ran the enumeration commands after it finds open ports. The only thing missing was the automatic creation of key directories a pentester might need during an engagement (exploit, loot, report, scans). Reconnoitre did this but didn't automatically run those commands for you. I thought ReconScan that was the bee's knees until I gave defensy a try. It's awesome! It combines the best features of Reconnoitre (auto directory creation) and ReconScan (automatically executing the enumeration commands). All I have to do is run it on a target or a set of targets and start going over the information it has already collected while it continues the rest of scan. The proof is in the pudding :) Passed the OSCP exam! Kudos to Tib3rius!
 >
 >\- werk0ut
 
-> A friend told me about defansy, so I gave it a try in the PWK labs. defansy launches the common tools we all always use, whether it be nmap or nikto, and also creates a nice subfolder system based on the targets you are attacking. The strongest feature of defansy is the speed; on the OSCP exam I left the tool running in the background while I started with another target, and in a matter of minutes I had all of the defansy output waiting for me. defansy creates a file full of commands that you should try manually, some of which may require tweaking (for example, hydra bruteforcing commands). It's good to have that extra checklist.
+> A friend told me about defensy, so I gave it a try in the PWK labs. defensy launches the common tools we all always use, whether it be nmap or nikto, and also creates a nice subfolder system based on the targets you are attacking. The strongest feature of defensy is the speed; on the OSCP exam I left the tool running in the background while I started with another target, and in a matter of minutes I had all of the defensy output waiting for me. defensy creates a file full of commands that you should try manually, some of which may require tweaking (for example, hydra bruteforcing commands). It's good to have that extra checklist.
 >
 >\- tr3mb0 (rooted 4/5 exam hosts)
 
-> Being introduced to defansy was a complete game changer for me while taking the OSCP and establishing my penetration testing methodology. defansy is a multi-threaded reconnaissance tool that combines and automates popular enumeration tools to do most of the hard work for you. You can't get much better than that! After running defansy on my OSCP exam hosts, I was given a treasure chest full of information that helped me to start on each host and pass on my first try. The best part of the tool is that it automatically launches further enumeration scans based on the initial port scans (e.g. run enum4linux if SMB is detected). The only bad part is that I did not use this tool sooner! Thanks Tib3rius.
+> Being introduced to defensy was a complete game changer for me while taking the OSCP and establishing my penetration testing methodology. defensy is a multi-threaded reconnaissance tool that combines and automates popular enumeration tools to do most of the hard work for you. You can't get much better than that! After running defensy on my OSCP exam hosts, I was given a treasure chest full of information that helped me to start on each host and pass on my first try. The best part of the tool is that it automatically launches further enumeration scans based on the initial port scans (e.g. run enum4linux if SMB is detected). The only bad part is that I did not use this tool sooner! Thanks Tib3rius.
 >
 >\- rufy (rooted 4/5 exam hosts)
 
-> defansy allows a security researcher to iteratively scan hosts and identify potential attack vectors. Its true power comes in the form of performing scans in the background while the attacker is working on another host. I was able to start my scans and finish a specific host I was working on - and then return to find all relevant scans completed. I was then able to immediately begin trying to gain initial access instead of manually performing the active scanning process. I will continue to use defansy in future penetration tests and CTFs, and highly recommend you do the same.
+> defensy allows a security researcher to iteratively scan hosts and identify potential attack vectors. Its true power comes in the form of performing scans in the background while the attacker is working on another host. I was able to start my scans and finish a specific host I was working on - and then return to find all relevant scans completed. I was then able to immediately begin trying to gain initial access instead of manually performing the active scanning process. I will continue to use defensy in future penetration tests and CTFs, and highly recommend you do the same.
 >
 >\- waar (rooted 4.99/5 exam hosts)
 
-> "If you have to do a task more than twice a day, you need to automate it." That's a piece of advice that an old boss gave to me. defansy takes that lesson to heart. Whether you're sitting in the exam, or in the PWK labs, you can fire off defansy and let it work its magic. I had it running during my last exam while I worked on the buffer overflow. By the time I finished, all the enum data I needed was there for me to go through. 10/10 would recommend for anyone getting into CTF, and anyone who has been at this a long time.
+> "If you have to do a task more than twice a day, you need to automate it." That's a piece of advice that an old boss gave to me. defensy takes that lesson to heart. Whether you're sitting in the exam, or in the PWK labs, you can fire off defensy and let it work its magic. I had it running during my last exam while I worked on the buffer overflow. By the time I finished, all the enum data I needed was there for me to go through. 10/10 would recommend for anyone getting into CTF, and anyone who has been at this a long time.
 >
 >\- whoisflynn
 
@@ -368,22 +368,22 @@ The scans/xml directory stores any XML output (e.g. from Nmap scans) separately 
 >
 >\- Tib3rius (rooted 5/5 exam hosts)
 
-> I highly recommend anyone going for their OSCP, doing CTFs or on HTB to checkout this tool. Been using defansy on HTB for a month before using it over on the PWK labs and it helped me pass my OSCP exam. If you're having a hard time getting settled with an enumeration methodology I encourage you to follow the flow and techniques this script uses. It takes out a lot of the tedious work that you're probably used to while at the same time provide well-organized subdirectories to quickly look over so you don't lose your head. The manual commands it provides are great for those specific situations that need it when you have run out of options. It's a very valuable tool, cannot recommend enough.
+> I highly recommend anyone going for their OSCP, doing CTFs or on HTB to checkout this tool. Been using defensy on HTB for a month before using it over on the PWK labs and it helped me pass my OSCP exam. If you're having a hard time getting settled with an enumeration methodology I encourage you to follow the flow and techniques this script uses. It takes out a lot of the tedious work that you're probably used to while at the same time provide well-organized subdirectories to quickly look over so you don't lose your head. The manual commands it provides are great for those specific situations that need it when you have run out of options. It's a very valuable tool, cannot recommend enough.
 >
 >\- d0hnuts (rooted 5/5 exam hosts)
 
-> defansy is not just any other tool, it is a recon correlation framweork for engagements. This helped me fire a whole bunch of scans while I was working on other targets. This can help a lot in time management. This assisted me to own 4/5 boxes in pwk exam! Result: Passed!
+> defensy is not just any other tool, it is a recon correlation framweork for engagements. This helped me fire a whole bunch of scans while I was working on other targets. This can help a lot in time management. This assisted me to own 4/5 boxes in pwk exam! Result: Passed!
 >
 >\- Wh0ami (rooted 4/5 exam hosts)
 
-> The first time I heard of defansy I asked whether I actually needed this, my enumeration was OK... I tried it with an open mind and straight away was a little floored on the amount of information that it would generate. Once I got used to it, and started reading the output I realized how much I was missing.  I used it for the OSCP exam, and it found things I would never have otherwise found. I firmly believe, without defansy I would have failed. It's a great tool, and I'm very impressed what Tib3rius was able to craft up. Definitely something I'm already recommending to others, including you!
+> The first time I heard of defensy I asked whether I actually needed this, my enumeration was OK... I tried it with an open mind and straight away was a little floored on the amount of information that it would generate. Once I got used to it, and started reading the output I realized how much I was missing.  I used it for the OSCP exam, and it found things I would never have otherwise found. I firmly believe, without defensy I would have failed. It's a great tool, and I'm very impressed what Tib3rius was able to craft up. Definitely something I'm already recommending to others, including you!
 >
 >\- othornew
 
-> defansy helped me save valuable time in my OSCP exam, allowing me to spend less time scanning systems and more time breaking into them. This software is worth its weight in gold!
+> defensy helped me save valuable time in my OSCP exam, allowing me to spend less time scanning systems and more time breaking into them. This software is worth its weight in gold!
 >
 >\- TorHackr
 
-> The magical tool that made enumeration a piece of cake, just fire it up and watch the beauty of multi-threading spitting a ton of information that would have taken loads of commands to execute. I certainly believe that by just using defansy in the OSCP exam, half of the effort would already be done. Strongly recommended!
+> The magical tool that made enumeration a piece of cake, just fire it up and watch the beauty of multi-threading spitting a ton of information that would have taken loads of commands to execute. I certainly believe that by just using defensy in the OSCP exam, half of the effort would already be done. Strongly recommended!
 >
 >\- Arman (solved 4.5/5 exam hosts)

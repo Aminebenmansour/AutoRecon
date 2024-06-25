@@ -20,9 +20,9 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             ip_address = data.decode()
             print("Adresse IP reçue :", ip_address)
             
-            # Exécutez le script semidefansy.py avec l'adresse IP comme argument
+            # Exécutez le script semidefensy.py avec l'adresse IP comme argument
             try:
-                subprocess.run(['python', 'defansy.py', ip_address], check=True)
+                subprocess.run(['python', 'defensy.py', ip_address], check=True)
                 print("Script executed successfully.")
             except subprocess.CalledProcessError as e:
                 print("Error executing script:", e)

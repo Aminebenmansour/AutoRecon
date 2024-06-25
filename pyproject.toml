@@ -1,12 +1,12 @@
 [tool.poetry]
-name = "defansy"
+name = "defensy"
 version = "2.0.35"
 description = "A multi-threaded network reconnaissance tool which performs automated enumeration of services."
 authors = ["Tib3rius"]
 license = "GNU GPL v3"
-exclude = ["defansy.py"]
+exclude = ["defensy.py"]
 packages = [
-	{ include = "defansy" },
+	{ include = "defensy" },
 ]
 
 [tool.poetry.dependencies]
@@ -22,7 +22,7 @@ Unidecode = "^1.3.1"
 [tool.poetry.dev-dependencies]
 
 [tool.poetry.scripts]
-defansy = "defansy.main:main"
+defensy = "defensy.main:main"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
